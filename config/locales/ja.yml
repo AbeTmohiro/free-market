@@ -140,3 +140,33 @@ ja:
       not_saved:
         one: エラーが発生したため %{resource} は保存されませんでした。
         other: "%{count} 件のエラーが発生したため %{resource} は保存されませんでした。"
+  enums:
+    item:
+      condition:
+        brand_new: 新品、未使用
+        look_brand_new: 未使用に近い
+        no_noticeable_scratches_or_stains: 目立った傷やよごれなし
+        with_a_little_scratches_and_dirt: やや傷やよごれあり
+        with_scratches_and_dirt: 傷や汚れあり
+        bad_condition: 全体的に状態が悪い
+      delivery_fee_payer:
+        postage_included: 送料込み（出品者負担）
+        freight_collect: 着払い
+      delivery_method:
+        undecided: 未定
+        easy_mercari_flight: らくらくメルカリ便
+        yu_mail: ゆうメール
+        letter_pack: レターパック
+        regular_mail: 普通郵便（定形、定形外）
+        kuroneko_yamato: クロネコヤマト
+        yu_pack: ゆうパック
+        click_post: クリックポスト
+        yu_packet: ゆうパケット
+
+      delivery_days:
+        ship_in_1to2days: 1〜2日で発送
+        ship_in_2to3days: 2〜3日で発送
+        ship_in_4to7days: 4〜7日で発送
+      deal:
+        now_on_sale: 販売中
+        sold_out: 売り切れ

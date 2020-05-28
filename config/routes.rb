@@ -12,9 +12,9 @@ Rails.application.routes.draw do
     get 'users/completed' => 'users/registrations#completed'
   end
 
-  resources :users, only: [:show]
+  resources :users, only: %i(show)
 
-  resources :items, only: [:index, :new, :show, :edit]  do
+  resources :items, except: %i(update destroy) do
     member do
       get "purchase_confirmation"
     end
@@ -22,7 +22,7 @@ Rails.application.routes.draw do
       get 'search'
     end
   end
-  resources :categories, only: [:index, :show]
-  resources :cards, only: [:index, :new]
+  resources :categories, only: %i(index show)
+  resources :cards, only: %i(index new)
 
 end
