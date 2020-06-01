@@ -14,7 +14,7 @@ Rails.application.routes.draw do
 
   resources :users, only: %i(show)
 
-  resources :items, except: %i(update destroy) do
+  resources :items, except: %i(destroy) do
     member do
       get "purchase_confirmation"
     end
