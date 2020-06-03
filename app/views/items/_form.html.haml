@@ -26,14 +26,14 @@
               クリックしてファイルをアップロード
     #image-file-fields
       = f.fields_for :images do |image|
-        -# 以下を記述するとファイル名出現
+        -# ↓以下を記述するとファイル名出現
         -# %br
         -# = image.object.src
         -# %br
-        -# new-item-imageとdata-indexの間にstyle: "display: block;"を追加するとファイルフィールド出現
+        -# ↓new-item-imageとdata-indexの間にstyle: "display: block;"を追加するとファイルフィールド出現
         = image.file_field :src, accept: "image/*", class: "new-item-image", data: {index: image.index} 
         - if image.object.persisted?
-          -# style: "display: block;"を末尾に追加するとファイルフィールド出現
+          -# ↓style: "display: block;"を末尾に追加するとファイルフィールド出現
           = image.check_box :_destroy, include_hidden: false
     .error-field{data:{column_name: "item_images"}}
   .block.horizontal-padding-5
