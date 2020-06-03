@@ -37,6 +37,11 @@ document.addEventListener('turbolinks:load', function () {
   $("#image-file-fields").on("change", `input[type="file"]`, function (e) { 
     const file = e.target.files[0];
     let index = $(this).data("index");
+    if (!file) {
+      const delete_button = $(`.item-image[data-index="${index}"]`).find(".item-image__buttons--delete");
+      delete_button.trigger("click");
+      return false;
+    }
     //選択された画像をblob url形式に変換する。
     const blob_url = window.URL.createObjectURL(file); 
     if ($(`.item-image[data-index="${index}"]`)[0]) {
