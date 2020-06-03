@@ -17,14 +17,10 @@ document.addEventListener('turbolinks:load', function () {
   });
   //新しく画像が選択された、もしくは変更しようとしたが何も選択しなかった時
   $("#image-file-fields").on("change", `input[type="file"]`, function (e) { 
-    console.table(e.target.files);
-    console.log("画像が選択されました")
     const file = e.target.files[0];
     let index = $(this).data("index");
-    console.log("選択した画像のindex=", index);
     //選択された画像をblob url形式に変換する。
     const blob_url = window.URL.createObjectURL(file); 
-    console.log(blob_url);
     const preview_html = `<img src="${blob_url}" width="20%">`;
     $("#select-image-button").before(preview_html);
     index += 1;
