@@ -44,4 +44,10 @@ document.addEventListener('turbolinks:load', function () {
     const file_field_html = newFileField(index);
     $("#image-file-fields").append(file_field_html);
   });
+  $("#selected-item-images").on("click", ".item-image__buttons--delete", function (e) {
+    const index = $(this).parents(".item-image").data("index");
+    $(this).parents(".item-image").remove();
+    $(`#item_images_attributes_${index}__destroy`).prop("checked", true);
+    $(`#item_images_attributes_${index}_src`).remove();
+  });
 });
