@@ -38,7 +38,12 @@ document.addEventListener('turbolinks:load', function () {
     let index = $(this).data("index");
     //選択された画像をblob url形式に変換する。
     const blob_url = window.URL.createObjectURL(file); 
-    const preview_html = `<img src="${blob_url}" width="20%">`;
+    if ($(`.item-image[data-index="${index}"]`)[0]) {
+      const preview_image = $(`.item-image[data-index="${index}"]`).children("img");
+      preview_image.attr("src", blob_url);
+      return false;
+    }
+    const preview_html = buildImagePreview(blob_url, index);
     $("#select-image-button").before(preview_html);
     index += 1;
     const file_field_html = newFileField(index);
