@@ -1,5 +1,22 @@
 //復習用にコメントアウトを残しておきます。 
 document.addEventListener('turbolinks:load', function () {
+  function buildImagePreview(blob_url, index) { //選択した画像ファイルのプレビューを表示する。
+    html = `
+            <div class="item-image new" data-index=${index}>
+              <img src =${blob_url} class="item-image__image">
+              <div class="item-image__buttons">
+                <div class="item-image__buttons--edit">
+                編集
+                </div>
+                <div class="item-image__buttons--delete">
+                削除
+                </div>
+              </div>
+            </div>
+            `;
+    return html;
+  }
+
   //新規画像投稿用のfile_fieldを作成しappendする。
   function newFileField(index) {
     const html = `
