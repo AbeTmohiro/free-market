@@ -50,4 +50,8 @@ document.addEventListener('turbolinks:load', function () {
     $(`#item_images_attributes_${index}__destroy`).prop("checked", true);
     $(`#item_images_attributes_${index}_src`).remove();
   });
+  $("#selected-item-images").on("click",".item-image__buttons--edit",function(e){
+    const index = $(this).parents(".item-image").data("index");
+    $(`#item_images_attributes_${index}_src`).trigger("click");
+  });
 });
