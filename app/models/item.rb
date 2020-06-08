@@ -3,6 +3,10 @@ class Item < ApplicationRecord
   validates :price, numericality:{greater_than_or_equal_to: 300, less_than_or_equal_to: 9999999}
   validates :images, length: { minimum: 1, maximum: 5, message: "の数が不正です" }
 
+  def self.search_by_categories(categories)
+    return Item.where(category: categories).includes(:images)
+  end
+  
   private
 
   belongs_to :category
