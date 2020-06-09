@@ -14,7 +14,8 @@ class ItemsController < ApplicationController
        {category: ladies_category, items: ladies_items},
        {category: mens_category, items: mens_items},
        {category: kids_category, items: kids_items}
-      ]  end
+      ]
+  end
 
   def new
     @item = Item.new
