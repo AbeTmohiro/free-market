@@ -1,6 +1,8 @@
 class ItemsController < ApplicationController
-  skip_before_action :authenticate_user!, only: [:index]
-  
+  skip_before_action :authenticate_user!, only: [:index,:show]
+  before_action :set_item, only: [:show, :edit, :update, :destroy]
+  before_action :user_is_not_seller, only: [:edit, :update, :destroy]
+
   def index
     ladies_category = Category.find_by(name: "レディース")
     mens_category = Category.find_by(name: "メンズ")
@@ -52,6 +54,14 @@ class ItemsController < ApplicationController
   end
 
  private
+
+  def set_item
+    @item = Item.find(params[:id])
+  end
+  
+  def user_is_not_seller
+    redirect_to root_path, alert: "あなたは出品者ではありません" unless @item.seller_id == current_user.id
+  end
 
   def item_params
     params.require(:item).permit(
