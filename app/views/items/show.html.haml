@@ -2,7 +2,7 @@
   .block__menu
     = @item.name
   .item-show
-    - if @item.deal != "販売中"
+    - if @item.deal_i18n != "販売中"
       = render partial: 'shared/sold_out', locals:{item: @item}
     .item-show__images-data
       .item-images
