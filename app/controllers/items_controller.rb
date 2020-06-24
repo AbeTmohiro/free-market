@@ -1,7 +1,7 @@
 class ItemsController < ApplicationController
-  skip_before_action :authenticate_user!, only: %i(index,show)
-  before_action :set_item, only: %i(show, edit, update, destroy)
-  before_action :user_is_not_seller, only: %i(edit, update, destroy)
+  skip_before_action :authenticate_user!, only: %i(index show)
+  before_action :set_item, only: %i(show edit update destroy)
+  before_action :user_is_not_seller, only: %i(edit update destroy)
 
   def index
     ladies_category = Category.find_by(name: "レディース")
