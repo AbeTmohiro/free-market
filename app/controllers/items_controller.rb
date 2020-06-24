@@ -37,20 +37,17 @@ class ItemsController < ApplicationController
   def show
   end
 
+  def edit
+    @item.images.build
+    render layout: 'no_menu' 
+  end
 
   def update
-    @item = Item.find(params[:id])
     if @item.update(item_params)
       redirect_to root_path, notice: "出品に成功しました"
     else
       redirect_to edit_item_path(@item), alert: @item.errors.full_messages
     end
-  end
-
-  def edit
-    @item = Item.find(params[:id])
-    @item.images.build
-    render layout: 'no_menu' 
   end
 
   def purchase_confirmation
