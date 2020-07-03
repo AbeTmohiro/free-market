@@ -78,3 +78,4 @@ gem 'carrierwave'
 gem 'mini_magick'
 gem 'fog-aws'
 gem 'ancestry'
+gem 'recaptcha', '>= 5.4.1',  require: "recaptcha/rails"
