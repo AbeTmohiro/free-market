@@ -41,6 +41,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
   # end
 
   def select
+    @auth_text = "で登録する"
   end
 
   def confirm_phone
@@ -52,10 +53,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
   def completed
   end
 
-  private
-  def check_recaptcha
-    redirect_to new_user_registration_path unless verify_recaptcha(message: "reCAPTCHAを承認してください")
-  end
+
 
   # protected
 
@@ -78,4 +76,8 @@ class Users::RegistrationsController < Devise::RegistrationsController
   # def after_inactive_sign_up_path_for(resource)
   #   super(resource)
   # end
+  private
+  def check_recaptcha
+    redirect_to new_user_registration_path unless verify_recaptcha(message: "reCAPTCHAを承認してください")
+  end
 end
