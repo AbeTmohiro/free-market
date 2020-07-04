@@ -7,14 +7,25 @@ class Users::RegistrationsController < Devise::RegistrationsController
   layout 'no_menu'
 
   # GET /resource/sign_up
-  # def new
-  #   super
-  # end
+  def new
+    if session["devise.sns_auth"]
+      ## session["devise.sns_auth"]がある＝sns認証
+      build_resource(session["devise.sns_auth"][:user])
+    else
+      super
+    end
+  end
 
   # POST /resource
-  # def create
-  #   super
-  # end
+  def create
+    if params[:user][:sns_auth]
+      password = Devise.friendly_token[8,12] + "1a"
+      ## 生成したパスワードをparamsに入れる
+      params[:user][:password] = password
+      params[:user][:password_confirmation] = password
+    end
+    super
+  end
 
   # GET /resource/edit
   # def edit

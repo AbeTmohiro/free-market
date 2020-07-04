@@ -4,16 +4,15 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
   end
 
   def callback_for(provider)
-    user_sns = User.from_omniauth(request.env["omniauth.auth"])
-    @user = user_sns[:user]
-    sns_credential = user_sns[:sns_credential]
-    if @user.persisted?
+    session["devise.sns_auth"] = User.from_omniauth(request.env["omniauth.auth"])
+
+    if session["devise.sns_auth"][:user].persisted?
       ## @userが登録済み
       sns_credential.update(user_id: @user.id)
-      sign_in_and_redirect @user, event: :authentication
+      sign_in_and_redirect session["devise.sns_auth"][:user], event: :authentication
     else
-      ## @userが未登録
-      render layout: 'no_menu', template: 'devise/registrations/new'
+      @sns_auth = true
+      redirect_to new_user_registration_path
     end
   end
 
