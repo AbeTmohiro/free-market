@@ -7,14 +7,36 @@ class Users::RegistrationsController < Devise::RegistrationsController
   layout 'no_menu'
 
   # GET /resource/sign_up
-  # def new
-  #   super
-  # end
+  def new
+    if session["devise.sns_auth"]
+      ## session["devise.sns_auth"]がある＝sns認証
+      build_resource(session["devise.sns_auth"]["user"])
+      @sns_auth = true
+    else
+      super
+    end
+  end
 
   # POST /resource
-  # def create
-  #   super
-  # end
+  def create
+    if session["devise.sns_auth"]
+      password = Devise.friendly_token[8,12] + "1a"
+      ## 生成したパスワードをparamsに入れる
+      params[:user][:password] = password
+      params[:user][:password_confirmation] = password
+    end
+    build_resource(sign_up_params)  ## @user = User.new(user_params) をしているイメージ
+    ## ↓resource（@user）にsns_credentialを紐付けている
+    resource.build_sns_credential(session["devise.sns_auth"]["sns_credential"]) if session["devise.sns_auth"]
+
+    if resource.save  ## @user.save をしているイメージ
+      set_flash_message! :notice, :signed_up  ## フラッシュメッセージのセット
+      sign_up(resource_name, resource)  ## 新規登録＆ログイン
+      respond_with resource, location: after_sign_up_path_for(resource)  ## リダイレクト
+    else
+      redirect_to new_user_registration_path, alert: @user.errors.full_messages
+    end
+  end
 
   # GET /resource/edit
   # def edit
@@ -41,6 +63,8 @@ class Users::RegistrationsController < Devise::RegistrationsController
   # end
 
   def select
+    session.delete("devise.sns_auth")
+    @auth_text = "で登録する"
   end
 
   def confirm_phone
@@ -52,10 +76,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
   def completed
   end
 
-  private
-  def check_recaptcha
-    redirect_to new_user_registration_path unless verify_recaptcha(message: "reCAPTCHAを承認してください")
-  end
+
 
   # protected
 
@@ -78,4 +99,8 @@ class Users::RegistrationsController < Devise::RegistrationsController
   # def after_inactive_sign_up_path_for(resource)
   #   super(resource)
   # end
+  private
+  def check_recaptcha
+    redirect_to new_user_registration_path unless verify_recaptcha(message: "reCAPTCHAを承認してください")
+  end
 end
