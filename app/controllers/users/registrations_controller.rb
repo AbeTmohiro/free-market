@@ -68,12 +68,15 @@ class Users::RegistrationsController < Devise::RegistrationsController
   end
 
   def confirm_phone
+    @progress = 2
   end
 
   def new_address
+    @progress = 3
   end
 
   def completed
+    @progress = 5
   end
 
 
