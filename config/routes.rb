@@ -24,7 +24,7 @@ Rails.application.routes.draw do
     end
   end
   resources :categories, only: %i(index show)
-  resources :cards, only: %i(index new)
+  resources :cards, only: %i(index new create destroy)
 
   namespace :api do
     resources :categories, only: %i(index), defaults: { format: 'json' }
