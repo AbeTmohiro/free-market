@@ -75,7 +75,6 @@ class ItemsController < ApplicationController
   def set_item
     @item = Item.find(params[:id])
   end
-  
 
   def user_is_seller
     redirect_to root_path, alert: "自分で出品した商品は購入できません" if @item.seller_id == current_user.id
