@@ -1,6 +1,7 @@
 class ItemsController < ApplicationController
   skip_before_action :authenticate_user!, only: %i(index show)
   before_action :set_item, only: %i(show edit update destroy purchase_confirmation)
+  before_action :set_item, only: %i(show edit update destroy purchase_confirmation purchase)
   before_action :user_is_not_seller, only: %i(edit update destroy)
 
   def index
@@ -52,6 +53,19 @@ class ItemsController < ApplicationController
 
   def purchase_confirmation
     render layout: 'no_menu' 
+  end
+
+  def purchase
+    redirect_to cards_path, alert: "クレジットカードを登録してください" and return unless current_user.card.present?
+    Payjp.api_key = Rails.application.credentials.payjp[:secret_key]
+    customer_token = current_user.card.customer_token
+    Payjp::Charge.create(
+      amount: @item.price, # 商品の値段
+      customer: customer_token, # 顧客、もしくはカードのトークン
+      currency: 'jpy'  # 通貨の種類
+    )
+    @item.update(deal: "sold_out")
+    redirect_to item_path(@item), notice: "商品を購入しました"
   end
 
  private
