@@ -53,6 +53,7 @@ class ItemsController < ApplicationController
   end
 
   def purchase_confirmation
+    @card = Card.get_card(current_user.card.customer_token) if current_user.card
     render layout: 'no_menu' 
   end
 
