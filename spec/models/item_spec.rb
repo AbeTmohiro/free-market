@@ -2,7 +2,8 @@ require 'rails_helper'
 
 describe Item do
   before do
-    @item = FactoryBot.build(:item)
+    user = create(:user)
+    @item = FactoryBot.build(:item,buyer_id: user[:id],seller_id:user[:id])
   end
 
   describe '出品' do

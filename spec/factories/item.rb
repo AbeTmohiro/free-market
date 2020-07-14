@@ -1,5 +1,8 @@
 FactoryBot.define do
   factory :item do
+    before(:create) do |image|
+      images { Rack::Test::UploadedFile.new(File.join(Rails.root, 'spec/fixtures/test.png')) }
+    end
     name               {"バナナ"}
     price              {"9999"}
     detail             {"banana"}
@@ -11,7 +14,6 @@ FactoryBot.define do
     deal               {1}
     buyer_id           {1}
     seller_id          {1}
-    category_id        {1}
-    association :image
+    category_id        {203}
   end
 end
