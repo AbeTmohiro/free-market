@@ -1,5 +1,17 @@
 require 'rails_helper'
-
-RSpec.describe User, type: :model do
-  pending "add some examples to (or delete) #{__FILE__}"
+describe User, type: :model do
+  describe 'ユーザー新規登録' do
+    it "nicknameが空では登録できない" do
+      user = FactoryBot.build(:user) 
+      user.nickname = "" 
+      user.valid?
+      expect(user.errors.full_messages).to include("Nicknameを入力してください")
+    end
+    it "emailが空では登録できない" do
+      user = FactoryBot.build(:user)
+      user.email = "" 
+      user.valid?
+      expect(user.errors.full_messages).to include("Eメールを入力してください")
+    end
+  end
 end
